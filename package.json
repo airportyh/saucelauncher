@@ -1,0 +1,23 @@
+{
+  "author": {
+    "name": "Toby Ho",
+    "email": "airportyh@gmail.com",
+    "website": "http://github.com/airportyh"
+  },
+  "name": "saucelauncher",
+  "description": "A command line launcher for browsers in SauceLabs.",
+  "version": "0.0.2",
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "dependencies": {
+    "commander": "1.x",
+    "async": "0.x.x",
+    "saucelabs": "*",
+    "wd": "*",
+    "winston": "0.3.x"
+  },
+  "bin": {
+    "saucelauncher": "bin/cli.js"
+  }
+}
