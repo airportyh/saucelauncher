@@ -15,7 +15,8 @@
     "async": "0.x.x",
     "saucelabs": "*",
     "wd": "*",
-    "winston": "0.3.x"
+    "winston": "0.3.x",
+    "underscore": "~1.4.3"
   },
   "bin": {
     "saucelauncher": "bin/cli.js"

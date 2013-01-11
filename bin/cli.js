@@ -8,6 +8,7 @@ var cmd = require('commander');
 var async = require('async');
 var log = require('winston');
 var version = '0.2.2';
+var _ = require('underscore');
 
 
 // ## Command Line Interface
@@ -258,7 +259,7 @@ var cache;
     setTimeout(runAction);
   }
 }());
-
+/*
 function intelligentDefaults(options) {
   var b = cache.browsers[options.name];
 
@@ -299,7 +300,7 @@ function intelligentDefaults(options) {
   delete options.name;
 }
 
-
+*/
 
 // ## Actions
 // Create a browserstack client.
@@ -320,8 +321,10 @@ function createClient(settings) {
       password: config.api_key
     };
   } else {
-    console.error('Authentication required. Use option "--user" or put a "username" and "password" in ' + CONFIG_FILE);
+    
+    console.error('Authentication required. Use option "--user" or put a "username" and "key_api" in ' + CONFIG_FILE);
     process.exit(1);
+    
   }
 
   return new saucelabs(extend(settings, auth));
@@ -412,7 +415,41 @@ function browsersAction() {
     var b = cache[name];
 
   }
-  console.log(cache);
+  var browsers = cache.browsers
+
+  //console.log(browsers)
+
+  var browsersByDesktopOrMobile = _(browsers).groupBy(function(browser){
+    return ['android', 'ipad', 'iphone'].indexOf(browser.api_name) === -1 ? 'Desktop' : 'Mobile'
+  })
+
+  for (var type in browsersByDesktopOrMobile){
+    console.log(type)
+    var browsersByName = _(browsersByDesktopOrMobile[type]).groupBy(function(b){
+      return b.long_name + ' (' + b.api_name + ')'
+    })
+    function version(browser){
+      return browser.short_version || browser.long_version
+    }
+    function versionNum(browser){
+      return parseInt(version(browser))
+    }
+
+    _(_.pairs(browsersByName)).sortBy('0').forEach(function(pair){
+      var selName = pair[0]
+      var browsers = pair[1]
+      console.log('  ' + selName)
+      var browsersByOs = _(browsers).groupBy('os')
+      for (var os in browsersByOs){
+        console.log('    ' + os)
+        var browsers = browsersByOs[os]
+        console.log('      ' + _(browsers).sortBy(versionNum).map(version).join(', '));
+      }
+      
+    })
+  }
+  //console.log(JSON.stringify(_.keys(browsersByName), null, '  '))
+  
 }
 /*
 function killAction(id) {
