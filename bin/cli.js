@@ -352,7 +352,7 @@ function launchAction(browserVer, url) {
 
   var options = parseBrowser(browserVer);
   options.url = url;
-  options.os = cmd.os ? cmd.os || 'Windows 2008';
+  options.os = cmd.os ? cmd.os : 'Windows 2008';
   options.timeout = cmd.timeout == "0" || cmd.attach ? FOREVER : cmd.timeout || 30;
 
   log.info('options:', options);
