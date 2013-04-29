@@ -14,7 +14,7 @@ var _ = require('underscore');
 // ## Command Line Interface
 cmd.version(version)
 .option('-u, --user <user:api_key>', 'Saucelabs authentication')
-.option('--os', 'The os of the browser or device. Defaults to win.')
+.option('-p, --os <platform>', 'The os of the browser or device. Defaults to win.')
 .option('-t, --timeout <seconds>', "Launch duration after which browsers exit.")
 .option('--attach', "Attach process to remote browser.", true)
 .option('-k, --key', "Tunneling key.")
@@ -352,6 +352,7 @@ function launchAction(browserVer, url) {
 
   var options = parseBrowser(browserVer);
   options.url = url;
+  options.os = cmd.os ? cmd.os : 'Windows 2008';
   options.timeout = cmd.timeout == "0" || cmd.attach ? FOREVER : cmd.timeout || 30;
 
   log.info('options:', options);
@@ -361,7 +362,7 @@ function launchAction(browserVer, url) {
   var browser = createRemote()
 
   browser.init({
-    browserName: options.selenium_name
+    browserName: options.name
     , platform: options.os
   }, function(){
     browser.get(url, function(){
