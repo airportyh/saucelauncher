@@ -1,0 +1,20 @@
+{
+  "framework": "mocha",
+  "src_files": [
+    "bin/**/*.js",
+    "lib/**/*.js",
+    "test/**/*.js"
+  ],
+
+  "before_tests": "make lint",
+
+  "launchers": {
+    "Mocha": {
+      "command":  "make tap",
+      "protocol": "tap"
+    }
+  },
+
+  "launch_in_ci"  : ["Mocha"],
+  "launch_in_dev" : ["Mocha"]
+}
