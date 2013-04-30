@@ -1,24 +1,37 @@
 {
-  "author": {
-    "name": "Toby Ho",
-    "email": "airportyh@gmail.com",
-    "website": "http://github.com/airportyh"
-  },
-  "name": "saucelauncher",
-  "description": "A command line launcher for browsers in SauceLabs.",
-  "version": "0.0.2",
+  "name":        "saucelauncher",
+  "description": "A command line tool for working with Sauce Labs.",
+  "version":     "0.1.0",
+  "bin":         "bin/cli.js",
+
+  "author": "Toby Ho <airportyh@gmail.com> (https://github.com/airportyh)",
+
+  "contributors": [
+    "Daniel Perez Alvarez <unindented@gmail.com> (https://github.com/unindented)"
+  ],
+
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">= 0.6.2"
   },
+
   "dependencies": {
-    "commander": "1.x",
-    "async": "0.x.x",
-    "saucelabs": "*",
-    "wd": "*",
-    "winston": "0.3.x",
-    "underscore": "~1.4.3"
+    "commander":  "~1.1.1",
+    "saucelabs":  "~0.0.9",
+    "lodash":     "~1.2.0",
+    "wd":         "~0.0.31",
+    "winston":    "~0.7.1"
   },
-  "bin": {
-    "saucelauncher": "bin/cli.js"
+  "devDependencies" : {
+    "jshint":           "*",
+    "testem":           "0.2.x",
+    "mocha":            "1.9.x",
+    "sinon":            "1.6.x",
+    "chai":             "1.5.x",
+    "sinon-chai":       "2.3.x",
+    "sandboxed-module": "0.2.x"
+  },
+
+  "scripts": {
+    "test": "make testem-ci"
   }
 }
