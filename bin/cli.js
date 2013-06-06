@@ -118,12 +118,24 @@ function killWorkers(bs, ids, msg) {
 var CONFIG_FILE
 // Located at ``~/.saucelabs.json``
 var config = (function() {
+
   CONFIG_FILE = path.join(process.env.HOME, ".saucelabs.json");
   // Try load a config file from user's home directory
   try {
     return JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf8'));
   } catch(e) {
-    return {};
+    return hasEnvConfig() ? envConfig() : {};
+  }
+
+  function hasEnvConfig() {
+    return process.env.SAUCE_USERNAME && process.env.SAUCE_ACCESS_KEY;
+  }
+
+  function envConfig() {
+    return {
+      username: process.env.SAUCE_USERNAME,
+      api_key: process.env.SAUCE_ACCESS_KEY
+    };
   }
 }());
 
